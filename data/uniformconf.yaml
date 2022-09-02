@@ -1,0 +1,71 @@
+signals:
+  - id: callForPapers
+    name: Call for papers
+    cap: 100
+    crit:
+      op: '&'
+      type: G
+      clauses:
+        - type: QS
+          match:
+            cs: false
+            op: '='
+            rhs: unfrmconf
+          queryName: utm_campaign
+    dur: p
+    description: ''
+    str: 50
+  - id: registrationComplete
+    name: Registration complete
+    cap: 100
+    crit:
+      op: '&'
+      type: G
+      clauses:
+        - type: CK
+          match:
+            cs: false
+            op: '='
+            rhs: 'true'
+          cookieName: unfrmconf_registered
+    dur: p
+    description: ''
+    str: 100
+enrichments:
+  - id: '1'
+    name: Profile
+    cap: 100
+    values:
+      - id: dev
+        value: Developer
+      - id: mkt
+        value: Marketer
+quirks:
+  - id: cdpAudience
+    name: CDP Audience
+    description: ''
+tests:
+  - id: whyAttendTest
+    name: Why Attend Test
+aggregates:
+  - id: nonTechies
+    name: Non-techies
+    description: ''
+    type: 0
+    inputs:
+      - dim: 1_mkt
+        sign: +
+  - id: submitCallForPapers
+    name: Submit call for papers
+    description: ''
+    type: 1
+    inputs:
+      - dim: callForPapers
+        sign: +
+  - id: techies
+    name: Techies
+    description: ''
+    type: 0
+    inputs:
+      - dim: 1_dev
+        sign: +
